@@ -1,4 +1,5 @@
 const Comics = require('../models/comics.models');
+const { deleteFile } = require("../middlewares/delete.file");
 
 //Gets
 const getComics = async (req, res) => {
@@ -9,7 +10,6 @@ const getComics = async (req, res) => {
       limit = limit ? parseInt(limit) : 5;
       if(page && !isNaN(parseInt(page))){
         page = parseInt(page);
-        // console.log(page)
         let numPages = numComics % limit > 0 ? numComics / limit + 1 : numComics / limit;
         
         if(page> numPages) page = numPages;
@@ -67,7 +67,6 @@ const getComicsById = async (req,res) => {
 const getComicsByTitle = async (req,res) => {
     try {
         const {title} = req.params;
-        console.log(req.params);
         const comicByTitle = await Comics.find({title: title});
         return res.status(200).json(comicByTitle);
     } catch (error) {
@@ -98,31 +97,35 @@ const getComicsByYear = async (req,res) => {
 //Post
 const postComics = async (req,res) => {
     try {
-        const newComic = new Comics(req.body);
-
-        const createComics = await newComic.save();
-        return res.status(201).json(createComics);
-        
-    } catch (error) {
+      const newComic = new Comics(req.body);
+      if (req.file.path) {
+      newComic.image = req.file.path;
+        }
+        const createComic = await newComic.save();
+        return res.status(201).json(createComic);
+  } catch (error) {
         return res.status(500).json(error);
-    }
+  }
 };
 
 //Put
 const putComics = async (req,res) => {
-    console.log(req.file);
     try {
-        const {id} = req.params;
-        const putComic = new Comics(req.body);
-        putComic._id = id;
-
-        const updateComic = await Comics.findOneAndUpdate(id, putComic,{new: true});
-        if(!updateComic){ 
-            return res.status(404).json({"message":"Comic not found"});
-        }
-        return res.status(200).json(updateComic);
+      const { id } = req.params;
+      const putComic = new Comics(req.body);
+      putComic._id = id;
+  console.log(req.file);
+      if (req.file) {
+        putComic.image = req.file.path;
+      }
+      const updateComic = await Comics.findByIdAndUpdate(id, putComic);
+      if (!updateComic.image) {
+        deleteFile(updateComic.image);
+      }
+      return res.status(200).json(updateComic);
     } catch (error) {
-        return res.status(500).json(error);
+      console.error(error);
+      return res.status(500).json({ error: 'Internal server error', details: error.message });
     }
 };
 
