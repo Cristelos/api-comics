@@ -12,7 +12,7 @@ const comicsSchema = new Schema({
     year: {type: Number, required: true}, 
     genre: {type: String, required: true}, 
     descripción: {type: String, required: true},
-    image: {type: String,required: false, default:"https://res.cloudinary.com/dgguxcib9/image/upload/v1679675262/comics/caratula-libro_h8l6do.png"}
+    image: {type: String,required: false, default:"https://res.cloudinary.com/dgguxcib9/image/upload/v1679852981/comics/caratula-libro_ma9zkp.png"}
 },{
    //esto nos va a generar dos campos más de los anteriores, que son fecha de creación y fecha de modificación
    timestamps: true,

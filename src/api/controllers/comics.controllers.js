@@ -1,5 +1,6 @@
 const Comics = require('../models/comics.models');
 const { deleteFile } = require("../middlewares/delete.file");
+const { put } = require('../routes/comics.routes');
 
 //Gets
 const getComics = async (req, res) => {
@@ -114,12 +115,11 @@ const putComics = async (req,res) => {
       const { id } = req.params;
       const putComic = new Comics(req.body);
       putComic._id = id;
-  console.log(req.file);
       if (req.file) {
         putComic.image = req.file.path;
       }
       const updateComic = await Comics.findByIdAndUpdate(id, putComic);
-      if (!updateComic.image) {
+      if (updateComic.image) {
         deleteFile(updateComic.image);
       }
       return res.status(200).json(updateComic);
