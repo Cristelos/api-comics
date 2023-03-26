@@ -1,4 +1,4 @@
-const Comics = require("../models/comics.models");
+const Comics = require('../models/comics.models');
 
 //Gets
 const getComics = async (req, res) => {
@@ -67,6 +67,7 @@ const getComicsById = async (req,res) => {
 const getComicsByTitle = async (req,res) => {
     try {
         const {title} = req.params;
+        console.log(req.params);
         const comicByTitle = await Comics.find({title: title});
         return res.status(200).json(comicByTitle);
     } catch (error) {
@@ -129,7 +130,7 @@ const putComics = async (req,res) => {
 const deleteComics = async (req,res) => {
     try {
         const {id} = req.params;//Le pasamos el id
-        const deleteComic = await Comics.findOneAndDelete(id);//Le decimos que borramos el elemento 
+        const deleteComic = await  Comics.findOneAndDelete(id);//Le decimos que borramos el elemento 
         if(!deleteMComic){  //Si no existiera devolvemos 404
             return res.status(404).json({"message":"Movie not found"});
         }

@@ -6,11 +6,11 @@ const Schema = mongoose.Schema;
 
 //Creamos el Schema de nuestra api:
 const comicsSchema = new Schema({
-    título: {type: String, required: true}, 
-    autor: {type: String, required: true},
+    title: {type: String, required: true}, 
+    author: {type: String, required: true},
     editorial: {type: String, required: true}, 
-    año: {type: Number, required: true}, 
-    género: {type: String, required: true}, 
+    year: {type: Number, required: true}, 
+    genre: {type: String, required: true}, 
     descripción: {type: String, required: true},
     image: {type: String,required: false, default:"https://res.cloudinary.com/dgguxcib9/image/upload/v1679675262/comics/caratula-libro_h8l6do.png"}
 },{

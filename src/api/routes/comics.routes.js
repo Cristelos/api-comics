@@ -17,7 +17,7 @@ router.get("/", getComics);
 
 router.get("/id/:id", getComicsById);
 
-router.get("/title/:title", getComicsByTitle);
+router.get("/title/:título", getComicsByTitle);
 
 router.get("/genre/:genre", getComicsByGenre);
 
