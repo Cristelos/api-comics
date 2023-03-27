@@ -1,6 +1,5 @@
 const Comics = require('../models/comics.models');
 const { deleteFile } = require("../middlewares/delete.file");
-// const { put } = require('../routes/comics.routes');
 
 //Gets
 const getComics = async (req, res) => {
