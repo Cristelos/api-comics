@@ -1,5 +1,5 @@
 const express = require("express");
-
+const upload = require('../middlewares/upload.file');
 const router = express.Router();
 
 const {
@@ -23,9 +23,9 @@ router.get("/genre/:genre", getComicsByGenre);
 
 router.get("/year/:year", getComicsByYear);
 
-router.post("/", postComics);
+router.post("/", upload.single('image'), postComics);
 
-router.put("/:id", putComics);
+router.put("/:id", upload.single('image'), putComics);
 
 router.delete("/:id", deleteComics);
 

@@ -1,6 +1,7 @@
 const Comics = require('../models/comics.models');
 const { deleteFile } = require("../middlewares/delete.file");
 
+
 //Gets
 const getComics = async (req, res) => {
     try {
@@ -54,7 +55,7 @@ const getComicsById = async (req,res) => {
     try {
         const {id} = req.params;
         const comicsSearchById = await Comics.findById(id).populate('comics');
-        console.log(comicsSearchById);
+        
         if(!comicsSearchById){
             return res.status(404).json({'message':'Comic not found'})
         }
@@ -106,6 +107,7 @@ const postComics = async (req,res) => {
   } catch (error) {
         return res.status(500).json(error);
   }
+
 };
 
 //Put
@@ -123,7 +125,6 @@ const putComics = async (req,res) => {
       }
       return res.status(200).json(updateComic);
     } catch (error) {
-      console.error(error);
       return res.status(500).json({ error: 'Internal server error', details: error.message });
     }
 };
